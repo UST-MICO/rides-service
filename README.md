@@ -1,41 +1,8 @@
-# Motivating Example
 
+# Rides Service
 
-## Commands
-
-### Start application with test environment
-
-```bash
-docker-compose up -d
-```
-
-### Running in Kubernetes cluster
-
-We assume that the test_message_generator is deployed with [MICO](https://github.com/UST-MICO/mico/), therefore it is running in namespace `mico-workspace`.
-
-Get logs:
-
-```bash
-kubectl -n mico-workspace logs -f $(kubectl get pods -n mico-workspace -l ust.mico/name=test-message-generator --output=jsonpath={.items..metadata.name})
-```
-
-Get environment variables:
-
-```bash
-kubectl -n mico-workspace exec -it $(kubectl get pods -n mico-workspace -l ust.mico/name=test-message-generator --output=jsonpath={.items..metadata.name}) env
-```
-
-Restart:
-
-```bash
-kubectl -n mico-workspace delete pod $(kubectl get pods -n mico-workspace -l ust.mico/name=test-message-generator --output=jsonpath={.items..metadata.name})
-```
-
-Manually change the deployment image:
-
-```bash
-kubectl set image deployment/$(kubectl get deployments -n mico-workspace -l ust.mico/name=test-message-generator --output=jsonpath={.items..metadata.name}) test-message-generator=ustmico/message-generator:local -n mico-workspace
-```
+A Service that generates cloud events containing informations about a completed ride.
+Each message contains a randomly generated customer rating between 7 and 10.
 
 ## Environment Variables
 
