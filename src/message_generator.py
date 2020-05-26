@@ -3,6 +3,7 @@ import uuid
 import socket
 from logging import info
 from random import randint as randint
+from random import choice as choice
 from json import load
 from config import PROJECT_PATH
 
@@ -33,6 +34,7 @@ class MessageGenerator:
         * data: dict with timestamp
         :return: dict, representing the CloudEvent message
         """
+        service_type = ['standard', 'premium']
         msg = {
                 'id': uuid.uuid4().hex,
                 'time': datetime.now(timezone.utc).isoformat(),
@@ -40,5 +42,6 @@ class MessageGenerator:
                 'data': {
                     'timestamp': datetime.now().timestamp(),
                     'customerRating': randint(7, 10),
+                    'serviceType': choice(service_type)
                 }}
         return {**msg, **self.default_fields}
